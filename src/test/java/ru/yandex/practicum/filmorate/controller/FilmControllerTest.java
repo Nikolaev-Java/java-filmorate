@@ -52,6 +52,7 @@ class FilmControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(responseBody().containsObjectAsJson(film, Film.class));
     }
+
     @Test
     void whenNameNull_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         Film film = new Film();
@@ -67,6 +68,7 @@ class FilmControllerTest {
                 .andExpect(responseBody().containsError("name",
                         "The field should not be null"));
     }
+
     @Test
     void whenDescriptionMore200_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         Film film = new Film();
@@ -85,6 +87,7 @@ class FilmControllerTest {
                 .andExpect(responseBody().containsError("description",
                         "The description should be no more than 200 characters long"));
     }
+
     @Test
     void whenReleaseDateIncorrect_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         Film film = new Film();
@@ -115,6 +118,7 @@ class FilmControllerTest {
                         .content(body))
                 .andExpect(status().isOk());
     }
+
     @Test
     void whenDurationNegative_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         Film film = new Film();
@@ -131,6 +135,7 @@ class FilmControllerTest {
                 .andExpect(responseBody().containsError("duration",
                         "The field must be positive"));
     }
+
     @Test
     void whenIdIncorrect_thenReturns400() throws Exception {
         Film film = new Film();
@@ -145,6 +150,7 @@ class FilmControllerTest {
                         .content(body))
                 .andExpect(status().isNotFound());
     }
+
     @Test
     void whenRequestEmpty_thenReturns400() throws Exception {
         mockMvc.perform(post(URL)

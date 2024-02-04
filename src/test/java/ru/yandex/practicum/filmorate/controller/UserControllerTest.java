@@ -53,6 +53,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(responseBody().containsObjectAsJson(user, User.class));
     }
+
     @Test
     void whenLoginNull_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         User user = new User();
@@ -68,6 +69,7 @@ class UserControllerTest {
                 .andExpect(responseBody().containsError("login",
                         "The field should not be null"));
     }
+
     @Test
     void whenLoginBlank_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         User user = new User();
@@ -84,6 +86,7 @@ class UserControllerTest {
                 .andExpect(responseBody().containsError("login",
                         "The login must not contain spaces or not be empty"));
     }
+
     @Test
     void whenLoginContainSpaces_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         User user = new User();
@@ -100,6 +103,7 @@ class UserControllerTest {
                 .andExpect(responseBody().containsError("login",
                         "The login must not contain spaces or not be empty"));
     }
+
     @Test
     void whenEmailIncorrect_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         User user = new User();
@@ -116,6 +120,7 @@ class UserControllerTest {
                 .andExpect(responseBody().containsError("email",
                         "The email is not correct"));
     }
+
     @Test
     void whenBirthdayIncorrect_thenReturns500AndErrorResult_withFluentApi() throws Exception {
         User user = new User();
@@ -132,6 +137,7 @@ class UserControllerTest {
                 .andExpect(responseBody().containsError("birthday",
                         "The date of birth should not be in the future"));
     }
+
     @Test
     void whenNameBlank_thenReturns200() throws Exception {
         User user = new User();
@@ -147,6 +153,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(responseBody().containsObjectAsJson(user, User.class));
     }
+
     @Test
     void whenIdIncorrect_thenReturns400() throws Exception {
         User user = new User();
@@ -161,6 +168,7 @@ class UserControllerTest {
                         .content(body))
                 .andExpect(status().isNotFound());
     }
+
     @Test
     void whenRequestEmpty_thenReturns400() throws Exception {
         mockMvc.perform(post(URL)

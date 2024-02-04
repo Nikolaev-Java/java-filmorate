@@ -2,8 +2,6 @@ package ru.yandex.practicum.filmorate.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Data
 public class Error {

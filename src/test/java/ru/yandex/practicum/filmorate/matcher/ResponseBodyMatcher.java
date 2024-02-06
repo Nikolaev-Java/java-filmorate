@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.test.web.servlet.ResultMatcher;
-import ru.yandex.practicum.filmorate.exception.Error;
+import ru.yandex.practicum.filmorate.exception.FieldValidationError;
 import ru.yandex.practicum.filmorate.exception.ValidationErrorResponse;
 
 import java.util.List;
@@ -37,11 +37,11 @@ public class ResponseBodyMatcher {
         return result -> {
             String json = result.getResponse().getContentAsString();
             ValidationErrorResponse errorResult = objectMapper.readValue(json, ValidationErrorResponse.class);
-            List<Error> fieldErrors = errorResult.getErrors().stream()
+            List<FieldValidationError> fieldFieldValidationErrors = errorResult.getFieldValidationErrors().stream()
                     .filter(error -> error.getFieldName().equals(expectedFieldName))
                     .filter(error -> error.getMessage().equals(expectedMessage))
                     .collect(Collectors.toList());
-            assertThat(fieldErrors)
+            assertThat(fieldFieldValidationErrors)
                     .hasSize(1)
                     .withFailMessage("expecting exactly 1 error message"
                                     + "with field name '%s' and message '%s'",

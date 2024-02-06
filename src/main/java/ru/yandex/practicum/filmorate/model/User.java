@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Data
 public class User {
+    @DecimalMin(value = "0", message = "The field must be a number")
     private int id;
     @NotBlank(message = "The field should not be empty")
     @NotNull(message = "The field should not be null")

@@ -9,14 +9,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ValidationErrorResponse {
-    private final List<Error> errors = new ArrayList<>();
+    private final List<FieldValidationError> fieldValidationErrors = new ArrayList<>();
 
     public ValidationErrorResponse(String fieldName, String message) {
-        errors.add(new Error(fieldName, message));
+        fieldValidationErrors.add(new FieldValidationError(fieldName, message));
     }
 
-    public ValidationErrorResponse(List<Error> errors) {
-        this.errors.addAll(errors);
+    public ValidationErrorResponse(List<FieldValidationError> fieldValidationErrors) {
+        this.fieldValidationErrors.addAll(fieldValidationErrors);
     }
 
 }

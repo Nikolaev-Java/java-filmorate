@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import javax.validation.Valid;
@@ -39,7 +39,7 @@ public class FilmController {
     @PutMapping
     public Film updateFilms(@Valid @RequestBody Film film) {
         if (!films.containsKey(film.getId())) {
-            throw new ObjectNotFoundException("The movie with the id " + id + " was not found", "Film");
+            throw new NotFoundException("The movie with the id " + id + " was not found", "Film");
         }
         films.put(film.getId(), film);
         log.debug("Update film - {}", film);

@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Error {
+public class FieldValidationError {
 
     private String fieldName;
 
     private String message;
 
-    public Error(@JsonProperty("fieldName") String fieldName, @JsonProperty("message") String message) {
+    public FieldValidationError(@JsonProperty("fieldName") String fieldName, @JsonProperty("message") String message) {
         this.fieldName = fieldName;
         this.message = message;
     }

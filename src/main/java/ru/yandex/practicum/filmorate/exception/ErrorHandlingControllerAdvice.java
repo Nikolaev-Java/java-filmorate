@@ -18,21 +18,22 @@ public class ErrorHandlingControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ValidationErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        final List<Error> errors = e.getBindingResult().getFieldErrors().stream()
+        final List<FieldValidationError> fieldValidationErrors = e.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> {
                     log.warn(fieldError.getObjectName() + "." + fieldError.getField()
                             + " - " + fieldError.getDefaultMessage());
-                    return new Error(fieldError.getField(), fieldError.getDefaultMessage());
+                    return new FieldValidationError(fieldError.getField(), fieldError.getDefaultMessage());
                 })
                 .collect(Collectors.toList());
-        return new ValidationErrorResponse(errors);
+        return new ValidationErrorResponse(fieldValidationErrors);
     }
 
-    @ExceptionHandler(ObjectNotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public Error onObjectNotFound(ObjectNotFoundException e) {
+    public FieldValidationError onNotFound(NotFoundException e) {
         log.warn(e.getObjectName() + " - " + e.getMessage());
-        return new Error(e.getObjectName(), e.getMessage());
+        return new FieldValidationError(e.getObjectName(), e.getMessage());
     }
+
 }

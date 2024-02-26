@@ -31,9 +31,9 @@ public class ErrorHandlingControllerAdvice {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public FieldValidationError onNotFound(NotFoundException e) {
+    public ValidationErrorResponse onNotFound(NotFoundException e) {
         log.warn(e.getObjectName() + " - " + e.getMessage());
-        return new FieldValidationError(e.getObjectName(), e.getMessage());
+        return new ValidationErrorResponse(List.of(new FieldValidationError(e.getObjectName(), e.getMessage())));
     }
 
 }

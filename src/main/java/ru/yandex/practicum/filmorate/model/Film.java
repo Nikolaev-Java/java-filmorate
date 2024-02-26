@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Film.
@@ -27,4 +29,13 @@ public class Film {
     @NotNull(message = "The field should not be empty")
     @Positive(message = "The field must be positive")
     private long duration;
+    private Set<Integer> likes = new HashSet<>();
+
+    public void addLike(int idUser) {
+        likes.add(idUser);
+    }
+
+    public void removeLike(int idUser) {
+        likes.remove(idUser);
+    }
 }

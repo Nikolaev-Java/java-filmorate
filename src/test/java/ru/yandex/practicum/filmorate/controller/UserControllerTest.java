@@ -10,10 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.service.user.InMemoryUserService;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -29,7 +28,7 @@ class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Mock
-    private UserService userService;
+    private InMemoryUserService inMemoryUserService;
     private static final String URL = "/users";
 
     @Test
@@ -212,7 +211,6 @@ class UserControllerTest {
         user.setId(1);
         user.addFriend(2);
         user1.setId(2);
-        user1.addFriend(1);
         mockMvc.perform(get(URL + "/1")
                         .contentType("application/json"))
                 .andExpect(responseBody().containsObjectAsJson(user, User.class));
@@ -266,17 +264,14 @@ class UserControllerTest {
         user.addFriend(2);
         user.addFriend(3);
         user1.setId(2);
-        user1.addFriend(1);
         user1.addFriend(3);
         user2.setId(3);
-        user2.addFriend(2);
-        user2.addFriend(1);
-        List<User> friends = Arrays.asList(user, user2);
+        List<User> friends = List.of(user2);
         mockMvc.perform(get(URL + "/2/friends")
                         .contentType("application/json"))
                 .andExpect(responseBody().containsListAsJson(friends, new TypeReference<List<User>>() {
                 }));
-        List<User> commonFriends = Arrays.asList(user2);
+        List<User> commonFriends = List.of(user2);
         mockMvc.perform(get(URL + "/1/friends/common/2")
                         .contentType("application/json"))
                 .andExpect(status().isOk())

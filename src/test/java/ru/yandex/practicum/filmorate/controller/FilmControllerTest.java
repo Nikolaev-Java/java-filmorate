@@ -11,7 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.film.InMemoryFilmService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +29,7 @@ class FilmControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Mock
-    private FilmService filmService;
+    private InMemoryFilmService inMemoryFilmService;
     @Mock
     private UserController userController;
     private static final String URL = "/films";

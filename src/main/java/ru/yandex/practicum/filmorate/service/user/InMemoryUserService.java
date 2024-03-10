@@ -47,9 +47,10 @@ public class InMemoryUserService implements UserService {
     }
 
     public void addFriend(int userId, int friendsId) {
-        userStorage.contains(friendsId);
+        User friend = userStorage.findById(friendsId);
         User user = userStorage.findById(userId);
         user.addFriend(friendsId);
+        friend.addFriend(userId);
     }
 
     @Override

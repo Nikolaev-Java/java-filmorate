@@ -211,6 +211,7 @@ class UserControllerTest {
         user.setId(1);
         user.addFriend(2);
         user1.setId(2);
+        user1.addFriend(1);
         mockMvc.perform(get(URL + "/1")
                         .contentType("application/json"))
                 .andExpect(responseBody().containsObjectAsJson(user, User.class));
@@ -265,8 +266,11 @@ class UserControllerTest {
         user.addFriend(3);
         user1.setId(2);
         user1.addFriend(3);
+        user1.addFriend(1);
         user2.setId(3);
-        List<User> friends = List.of(user2);
+        user2.addFriend(1);
+        user2.addFriend(2);
+        List<User> friends = List.of(user, user2);
         mockMvc.perform(get(URL + "/2/friends")
                         .contentType("application/json"))
                 .andExpect(responseBody().containsListAsJson(friends, new TypeReference<List<User>>() {

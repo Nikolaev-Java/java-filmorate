@@ -158,7 +158,9 @@ class FilmControllerTest {
         mockMvc.perform(put(URL)
                         .contentType("application/json")
                         .content(body))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(responseBody().containsError("Film",
+                        "The movie with the id 1 was not found"));
     }
 
     @Test

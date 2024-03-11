@@ -28,13 +28,17 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public void update(User user) {
-        contains(user.getId());
+        if (!users.containsKey(user.getId())) {
+            throw new NotFoundException("The user with the id " + id + " was not found", "User");
+        }
         users.put(user.getId(), user);
     }
 
     @Override
     public User findById(int id) {
-        contains(id);
+        if (!users.containsKey(id)) {
+            throw new NotFoundException("The user with the id " + id + " was not found", "User");
+        }
         return users.get(id);
     }
 
@@ -44,10 +48,8 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public void contains(int id) {
-        if (!users.containsKey(id)) {
-            throw new NotFoundException("The user with the id " + id + " was not found", "User");
-        }
+    public boolean contains(int id) {
+        return users.containsKey(id);
     }
 
     private void calcId() {

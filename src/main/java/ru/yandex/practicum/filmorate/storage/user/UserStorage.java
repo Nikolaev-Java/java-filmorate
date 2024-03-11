@@ -15,6 +15,6 @@ public interface UserStorage {
 
     List<User> findAll();
 
-    void contains(int id);
+    boolean contains(int id);
 }
 

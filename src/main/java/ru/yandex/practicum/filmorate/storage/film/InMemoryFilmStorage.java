@@ -32,21 +32,23 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public void contains(int id) {
-        if (!films.containsKey(id)) {
-            throw new NotFoundException("The movie with the id " + id + " was not found", "Film");
-        }
+    public boolean contains(int id) {
+        return films.containsKey(id);
     }
 
     @Override
     public void update(Film film) {
-        contains(film.getId());
+        if (!films.containsKey(id)) {
+            throw new NotFoundException("The movie with the id " + id + " was not found", "Film");
+        }
         films.put(film.getId(), film);
     }
 
     @Override
     public Film findById(int id) {
-        contains(id);
+        if (!films.containsKey(id)) {
+            throw new NotFoundException("The movie with the id " + id + " was not found", "Film");
+        }
         return films.get(id);
     }
 

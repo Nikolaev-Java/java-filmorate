@@ -205,7 +205,7 @@ class FilmControllerTest {
                         .contentType("application/json"))
                 .andExpect(status().isNotFound())
                 .andExpect(responseBody().containsError("User",
-                        "The user with the id -2 was not found"));
+                        "You can't like it. The user with this -2 was not found"));
         mockMvc.perform(put(URL + "/-2/like/1")
                         .contentType("application/json"))
                 .andExpect(status().isNotFound())

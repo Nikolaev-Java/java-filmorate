@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
@@ -55,7 +56,9 @@ public class InMemoryUserService implements UserService {
 
     @Override
     public void deleteFriend(int userId, int friendsId) {
-        userStorage.contains(friendsId);
+        if (!userStorage.contains(friendsId)) {
+            throw new NotFoundException(String.format("A friend with this %s was not found", friendsId), "User");
+        }
         userStorage.findById(userId).deleteFriend(friendsId);
     }
 

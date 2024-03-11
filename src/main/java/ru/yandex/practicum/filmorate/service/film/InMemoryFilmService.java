@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service.film;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
@@ -49,15 +50,21 @@ public class InMemoryFilmService implements FilmService {
 
     @Override
     public void addLike(int idFilm, int userId) {
-        userStorage.contains(userId);
+        if (!userStorage.contains(userId)) {
+            throw new NotFoundException(
+                    String.format("You can't like it. The user with this %s was not found", userId), "User");
+        }
         Film film = filmStorage.findById(idFilm);
         film.addLike(userId);
     }
 
     @Override
-    public void removeLike(int idFilm, int usersId) {
-        userStorage.contains(usersId);
-        filmStorage.findById(idFilm).removeLike(usersId);
+    public void removeLike(int idFilm, int userId) {
+        if (!userStorage.contains(userId)) {
+            throw new NotFoundException(
+                    String.format("You can't delete a like. The user with this %s was not found", userId), "User");
+        }
+        filmStorage.findById(idFilm).removeLike(userId);
     }
 
     @Override

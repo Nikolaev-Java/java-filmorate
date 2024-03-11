@@ -15,5 +15,5 @@ public interface FilmStorage {
 
     List<Film> findAll();
 
-    void contains(int id);
+    boolean contains(int id);
 }

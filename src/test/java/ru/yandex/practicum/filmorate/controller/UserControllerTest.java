@@ -318,6 +318,6 @@ class UserControllerTest {
                         .contentType("aplication/json"))
                 .andExpect(status().isNotFound())
                 .andExpect(responseBody().containsError("User",
-                        "The user with the id 3 was not found"));
+                        "A friend with this 3 was not found"));
     }
 }

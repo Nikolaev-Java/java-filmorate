@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.user.InMemoryUserService;
+import ru.yandex.practicum.filmorate.service.user.UserServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +28,7 @@ class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Mock
-    private InMemoryUserService inMemoryUserService;
+    private UserServiceImpl userServiceImpl;
     private static final String URL = "/users";
 
     @Test

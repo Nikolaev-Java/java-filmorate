@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.user.InMemoryUserService;
+import ru.yandex.practicum.filmorate.service.user.UserServiceImpl;
 import ru.yandex.practicum.filmorate.service.user.UserService;
 
 import javax.validation.Valid;
@@ -24,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(InMemoryUserService userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 

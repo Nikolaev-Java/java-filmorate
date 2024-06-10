@@ -27,7 +27,7 @@ public class User {
     @Past(message = "The date of birth should not be in the future")
     @NotNull(message = "The field should not be null")
     private LocalDate birthday;
-    private Set<Integer> friends = new HashSet<>();
+    /*private Set<Integer> friends = new HashSet<>();
 
     public void addFriend(int id) {
         friends.add(id);
@@ -35,5 +35,5 @@ public class User {
 
     public void deleteFriend(int id) {
         friends.remove(id);
-    }
+    }*/
 }

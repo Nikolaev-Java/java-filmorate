@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.dal.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.dal.mappers.UserRowMapper;
@@ -9,11 +8,13 @@ import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.List;
 import java.util.Map;
+
 @Repository
 @RequiredArgsConstructor
 public class JdbcFriendShipRepository implements FriendShipRepository {
     private final NamedParameterJdbcOperations jdbc;
     private final UserRowMapper userRowMapper;
+
     @Override
     public void addFriend(int userId, int friendId) {
         String sql = "insert into friendship (user_id, friend_id) values (:userId, :friendId)";
@@ -32,7 +33,7 @@ public class JdbcFriendShipRepository implements FriendShipRepository {
                 "from users u " +
                 "join friendship f on u.user_id = f.friend_id " +
                 "where f.user_id = :userId";
-        return jdbc.query(sql,Map.of("userId",userId), userRowMapper);
+        return jdbc.query(sql, Map.of("userId", userId), userRowMapper);
     }
 
     @Override
@@ -44,6 +45,6 @@ public class JdbcFriendShipRepository implements FriendShipRepository {
                 "        where f.USER_ID = :userId) AS S " +
                 "join FRIENDSHIP AS D on S.FRIEND_ID = D.FRIEND_ID " +
                 "where D.USER_ID = :anotherUserId";
-        return jdbc.query(sql,Map.of("userId",userId,"anotherUserId",anotherUserId), userRowMapper);
+        return jdbc.query(sql, Map.of("userId", userId, "anotherUserId", anotherUserId), userRowMapper);
     }
 }

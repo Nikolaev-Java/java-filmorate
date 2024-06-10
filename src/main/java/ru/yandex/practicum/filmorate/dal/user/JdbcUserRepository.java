@@ -22,6 +22,7 @@ import java.util.Optional;
 public class JdbcUserRepository implements UserRepository {
     private final NamedParameterJdbcOperations jdbc;
     private final UserRowMapper userRowMapper;
+
     @Override
     public User create(User user) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -33,9 +34,9 @@ public class JdbcUserRepository implements UserRepository {
                         .addValue("birthday", user.getBirthday()),
                 keyHolder
         );
-        if(Objects.nonNull(keyHolder.getKey())) {
+        if (Objects.nonNull(keyHolder.getKey())) {
             user.setId(keyHolder.getKey().intValue());
-        }else {
+        } else {
             throw new InternalServerException("Ошибка создания пользователя");
         }
         return user;
@@ -47,7 +48,7 @@ public class JdbcUserRepository implements UserRepository {
         try {
             User result = jdbc.queryForObject(sql, Map.of("id", id), userRowMapper);
             return Optional.ofNullable(result);
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
@@ -55,7 +56,7 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public void update(User user) {
         User oldUser = findById(user.getId())
-                .orElseThrow(()-> new NotFoundException("The user with the id " +
+                .orElseThrow(() -> new NotFoundException("The user with the id " +
                         user.getId() + " was not found", "User"));
         String sql = "update users set email = :email," +
                 "login = :login," +

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.dal.film;
+package ru.yandex.practicum.filmorate.repository.film;
 
 import ru.yandex.practicum.filmorate.model.Film;
 
@@ -15,5 +15,4 @@ public interface FilmRepository {
 
     List<Film> findAll();
 
-    boolean contains(int id);
 }

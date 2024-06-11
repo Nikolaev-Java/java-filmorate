@@ -25,6 +25,8 @@ public class Film {
     @NotNull(message = "The field should not be empty")
     @Positive(message = "The field must be positive")
     private long duration;
+    private Mpa mpa;
+    private Set<Genre> genres = new HashSet<>();
     private Set<Integer> likes = new HashSet<>();
 
     public void addLike(int idUser) {

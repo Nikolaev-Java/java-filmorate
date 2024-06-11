@@ -1,14 +1,20 @@
-package ru.yandex.practicum.filmorate.dal.film;
+package ru.yandex.practicum.filmorate.repository.film;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class JdbcFilmRepository implements FilmRepository {
+    private final NamedParameterJdbcOperations jdbc;
     @Override
     public void create(Film film) {
+        String sql = "INSERT INTO film (film_name, description, release_date, duration, mpa_id) " +
+                "VALUES (:name, :description, :release_date, :duration, :mpa_id)";
 
     }
 
@@ -32,8 +38,4 @@ public class JdbcFilmRepository implements FilmRepository {
         return List.of();
     }
 
-    @Override
-    public boolean contains(int id) {
-        return false;
-    }
 }

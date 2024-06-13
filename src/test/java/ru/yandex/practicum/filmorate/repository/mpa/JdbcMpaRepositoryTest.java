@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JdbcMpaRepositoryTest {
     private final JdbcMpaRepository mpaRepository;
     private final static int TEST_MPA01_ID = 1;
-    private final static int TEST_MPA02_ID = 2;
 
     @Test
     void findAll() {

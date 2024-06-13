@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class JdbcMpaRepositoryTest {
     private final JdbcMpaRepository mpaRepository;
-    private final static int TEST_MPA01_ID = 1;
+    private static final int TEST_MPA01_ID = 1;
 
     @Test
     void findAll() {

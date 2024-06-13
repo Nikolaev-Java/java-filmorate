@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import ru.yandex.practicum.filmorate.validator.ReleaseDate;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -32,13 +31,5 @@ public class Film {
     private Mpa mpa;
     @JsonDeserialize(as = LinkedHashSet.class)
     private Set<Genre> genres = new LinkedHashSet<>();
-    private Set<Integer> likes = new HashSet<>();
 
-    public void addLike(int idUser) {
-        likes.add(idUser);
-    }
-
-    public void removeLike(int idUser) {
-        likes.remove(idUser);
-    }
 }

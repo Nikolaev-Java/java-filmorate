@@ -14,6 +14,5 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    boolean contains(int id);
 }
 

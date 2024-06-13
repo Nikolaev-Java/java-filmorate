@@ -71,9 +71,4 @@ public class JdbcUserRepository implements UserRepository {
         String sql = "select * from users";
         return jdbc.query(sql, userRowMapper);
     }
-
-    @Override
-    public boolean contains(int id) {
-        return false;
-    }
 }

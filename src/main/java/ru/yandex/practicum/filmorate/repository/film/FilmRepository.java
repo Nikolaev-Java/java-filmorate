@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FilmRepository {
-    void create(Film film);
+    Film create(Film film);
 
     Optional<Film> findById(int id);
 
@@ -16,7 +16,6 @@ public interface FilmRepository {
 
     List<Film> findAll();
 
-    List<Film> getTopPopularFilms(int count);
 
     void addLike(int filmId, int userId);
 

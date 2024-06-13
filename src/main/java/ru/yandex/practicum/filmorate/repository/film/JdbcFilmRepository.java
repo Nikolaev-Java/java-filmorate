@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.repository.film;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -28,7 +27,7 @@ public class JdbcFilmRepository implements FilmRepository {
     private final GenreResultExtractor genreResultExtractor;
 
     @Override
-    public void create(Film film) {
+    public Film create(Film film) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO films (film_name, description, release_date, duration, mpa_id) " +
                 "VALUES (:name, :description, :releaseDate, :duration, :mpaId)";
@@ -39,6 +38,7 @@ public class JdbcFilmRepository implements FilmRepository {
             throw new InternalServerException("Ошибка создания пользователя");
         }
         createFilmGenresRelation(film);
+        return film;
     }
 
     @Override
@@ -48,15 +48,15 @@ public class JdbcFilmRepository implements FilmRepository {
         String sql = "SELECT * FROM films LEFT JOIN PUBLIC.FILM_GENRES FG on films.FILM_ID = FG.FILM_ID " +
                 "join PUBLIC.MPA M on M.MPA_ID = films.MPA_ID" +
                 " WHERE films.FILM_ID = :id";
-        try {
-            Film result = jdbc.query(sql, Map.of("id", id), filmResultSetExtractor);
-            if (result.getGenres() != null && !result.getGenres().isEmpty()) {
-                result.getGenres().forEach(genre -> genre.setName(genreMap.get(genre.getId()).getName()));
-            }
-            return Optional.ofNullable(result);
-        } catch (EmptyResultDataAccessException e) {
+
+        Film result = jdbc.query(sql, Map.of("id", id), filmResultSetExtractor);
+        if (result == null) {
             return Optional.empty();
         }
+        if (result.getGenres() != null && !result.getGenres().isEmpty()) {
+            result.getGenres().forEach(genre -> genre.setName(genreMap.get(genre.getId()).getName()));
+        }
+        return Optional.ofNullable(result);
     }
 
     @Override
@@ -93,11 +93,6 @@ public class JdbcFilmRepository implements FilmRepository {
         List<Film> films = jdbc.query(queryFilms, filmRowMapper);
         films.forEach(film -> film.setGenres(getGenresFilms(film.getId(), genresRelations, genreMap)));
         return films;
-    }
-
-    @Override
-    public List<Film> getTopPopularFilms(int count) {
-        return List.of();
     }
 
     @Override

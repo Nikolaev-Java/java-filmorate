@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.repository.mpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
@@ -17,6 +16,7 @@ import java.util.Optional;
 public class JdbcMpaRepository implements MpaRepository {
     private final NamedParameterJdbcOperations jdbc;
     private final MpaRowMapper mpaRowMapper;
+
     @Override
     public List<Mpa> findAll() {
         String sql = "select * from mpa";

@@ -10,11 +10,8 @@ import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.repository.film.FilmRepository;
 import ru.yandex.practicum.filmorate.repository.genres.GenreRepository;
 import ru.yandex.practicum.filmorate.repository.mpa.MpaRepository;
-import ru.yandex.practicum.filmorate.service.mpa.MpaService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -23,10 +20,11 @@ public class FilmServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
     private final MpaRepository mpaRepository;
     private final GenreRepository genreRepository;
+
     @Override
     public Film create(Film model) {
         mpaRepository.findById(model.getMpa().id())
-                        .orElseThrow(()-> new InternalServerException("Mpa with id: " +model.getMpa().id() +" not foud"));
+                .orElseThrow(() -> new InternalServerException("Mpa with id: " + model.getMpa().id() + " not foud"));
         if (!model.getGenres().isEmpty()) {
             List<Integer> filmsGenresIds = model.getGenres().stream()
                     .map(Genre::getId)
@@ -44,7 +42,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public Film findById(int id) {
         return filmRepository.findById(id).orElseThrow(
-                ()-> new NotFoundException("Film with id " + id + " not found", "Film")
+                () -> new NotFoundException("Film with id " + id + " not found", "Film")
         );
     }
 

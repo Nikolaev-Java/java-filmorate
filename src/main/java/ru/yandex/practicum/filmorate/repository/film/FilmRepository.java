@@ -21,5 +21,6 @@ public interface FilmRepository {
     void addLike(int filmId, int userId);
 
     void removeLike(int filmId, int userId);
+
     List<Film> findTopPopularFilms(int count);
 }

@@ -17,11 +17,12 @@ public class MpaController {
     private final MpaService mpaService;
 
     @GetMapping
-    public List<Mpa> findAll(){
+    public List<Mpa> findAll() {
         return mpaService.findAll();
     }
+
     @GetMapping("/{id}")
-    public Mpa findById(@PathVariable int id){
+    public Mpa findById(@PathVariable int id) {
         return mpaService.findById(id);
     }
 }

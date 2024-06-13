@@ -3,8 +3,8 @@ package ru.yandex.practicum.filmorate.repository.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.repository.mappers.UserRowMapper;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.repository.mappers.UserRowMapper;
 
 import java.util.List;
 import java.util.Map;

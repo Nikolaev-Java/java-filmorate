@@ -12,7 +12,9 @@ import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.repository.mappers.*;
+import ru.yandex.practicum.filmorate.repository.mappers.FilmResultSetExtractor;
+import ru.yandex.practicum.filmorate.repository.mappers.FilmRowMapper;
+import ru.yandex.practicum.filmorate.repository.mappers.GenreResultExtractor;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +50,7 @@ public class JdbcFilmRepository implements FilmRepository {
                 " WHERE films.FILM_ID = :id";
         try {
             Film result = jdbc.query(sql, Map.of("id", id), filmResultSetExtractor);
-            if(result.getGenres()!=null && !result.getGenres().isEmpty()) {
+            if (result.getGenres() != null && !result.getGenres().isEmpty()) {
                 result.getGenres().forEach(genre -> genre.setName(genreMap.get(genre.getId()).getName()));
             }
             return Optional.ofNullable(result);
@@ -68,7 +70,7 @@ public class JdbcFilmRepository implements FilmRepository {
                 "WHERE FILMS.FILM_ID = :id";
         int updateRow = jdbc.update(sql, getParamsMap(film));
         if (updateRow != 1) {
-            throw new NotFoundException("Film not update","Film");
+            throw new NotFoundException("Film not update", "Film");
         }
         String queryDeleteGenreRelation = "DELETE FROM FILM_GENRES WHERE FILM_ID = :id";
         jdbc.update(queryDeleteGenreRelation, getParamsMap(film));
@@ -118,7 +120,7 @@ public class JdbcFilmRepository implements FilmRepository {
                 "GROUP BY films.film_id " +
                 "ORDER BY COUNT(likes.user_id) DESC " +
                 "LIMIT :count";
-        return jdbc.query(sql,Map.of("count", count), filmRowMapper);
+        return jdbc.query(sql, Map.of("count", count), filmRowMapper);
     }
 
     private record GenresRelation(int filmId, int genreId) {

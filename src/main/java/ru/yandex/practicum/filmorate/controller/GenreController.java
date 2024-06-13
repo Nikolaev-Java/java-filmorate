@@ -20,6 +20,7 @@ public class GenreController {
     public List<Genre> findAllGenres() {
         return genreService.findAll();
     }
+
     @GetMapping("/{id}")
     public Genre findGenreById(@PathVariable int id) {
         return genreService.findById(id);

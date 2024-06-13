@@ -16,6 +16,7 @@ import java.util.Optional;
 public class JdbcGenreRepository implements GenreRepository {
     private final NamedParameterJdbcOperations jdbc;
     private final GenreRowMapper genreRowMapper;
+
     @Override
     public List<Genre> findAll() {
         String sql = "select * from genres";
@@ -27,7 +28,7 @@ public class JdbcGenreRepository implements GenreRepository {
         String sql = "select * from genres where genre_id = :id";
         try {
             return Optional.ofNullable(jdbc.queryForObject(sql, Map.of("id", id), genreRowMapper));
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }

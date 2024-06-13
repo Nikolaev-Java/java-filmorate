@@ -31,4 +31,10 @@ public class JdbcGenreRepository implements GenreRepository {
             return Optional.empty();
         }
     }
+
+    @Override
+    public List<Genre> findByIds(List<Integer> ids) {
+        String sql = "select * from genres where genre_id in (:ids)";
+        return jdbc.query(sql, Map.of("ids", ids), genreRowMapper);
+    }
 }

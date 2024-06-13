@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.h2.jdbc.JdbcBatchUpdateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,5 +36,10 @@ public class ErrorHandlingControllerAdvice {
         log.warn(e.getObjectName() + " - " + e.getMessage());
         return new ValidationErrorResponse(List.of(new FieldValidationError(e.getObjectName(), e.getMessage())));
     }
-
+    @ExceptionHandler(InternalServerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ValidationErrorResponse onInternalServerException(InternalServerException e) {
+        return new ValidationErrorResponse(List.of(new FieldValidationError("sql", e.getMessage())));
+    }
 }

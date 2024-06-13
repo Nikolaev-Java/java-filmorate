@@ -55,9 +55,6 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public void update(User user) {
-        User oldUser = findById(user.getId())
-                .orElseThrow(() -> new NotFoundException("The user with the id " +
-                        user.getId() + " was not found", "User"));
         String sql = "update users set email = :email," +
                 "login = :login," +
                 "name = :name," +

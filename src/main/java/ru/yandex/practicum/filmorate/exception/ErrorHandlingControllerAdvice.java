@@ -36,4 +36,10 @@ public class ErrorHandlingControllerAdvice {
         return new ValidationErrorResponse(List.of(new FieldValidationError(e.getObjectName(), e.getMessage())));
     }
 
+    @ExceptionHandler(InternalServerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ValidationErrorResponse onInternalServerException(InternalServerException e) {
+        return new ValidationErrorResponse(List.of(new FieldValidationError("sql", e.getMessage())));
+    }
 }

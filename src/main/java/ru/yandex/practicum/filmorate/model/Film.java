@@ -1,21 +1,20 @@
 package ru.yandex.practicum.filmorate.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import ru.yandex.practicum.filmorate.validator.ReleaseDate;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
  * Film.
  */
 @Data
+@EqualsAndHashCode(of = "id")
 public class Film {
     @DecimalMin(value = "0", message = "The field must be a number")
     private int id;
@@ -29,13 +28,8 @@ public class Film {
     @NotNull(message = "The field should not be empty")
     @Positive(message = "The field must be positive")
     private long duration;
-    private Set<Integer> likes = new HashSet<>();
+    private Mpa mpa;
+    @JsonDeserialize(as = LinkedHashSet.class)
+    private Set<Genre> genres = new LinkedHashSet<>();
 
-    public void addLike(int idUser) {
-        likes.add(idUser);
-    }
-
-    public void removeLike(int idUser) {
-        likes.remove(idUser);
-    }
 }
